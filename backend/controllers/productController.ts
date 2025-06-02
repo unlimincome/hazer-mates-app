@@ -1,66 +1,84 @@
-import { Request, Response } from 'express'
-import { PrismaClient } from '@prisma/client'
+import { Request, Response } from 'express';
+import { PrismaClient } from '@prisma/client';
 
-const prisma = new PrismaClient()
+const prisma = new PrismaClient();
 
 // Получить все продукты
 export const getAllProducts = async (req: Request, res: Response) => {
   try {
-    const products = await prisma.product.findMany()
-    res.json(products)
-  } catch (err) {
-    res.status(500).json({ error: 'Ошибка при получении товаров' })
+    const products = await prisma.product.findMany();
+    res.json(products);
+  } catch (error) {
+    res.status(500).json({ error: 'Ошибка при получении продуктов' });
   }
-}
+};
 
-// Получить продукт по id
+// Получить продукт по ID
 export const getProductById = async (req: Request, res: Response) => {
+  const { id } = req.params;
   try {
     const product = await prisma.product.findUnique({
-      where: { id: Number(req.params.id) }
-    })
-    if (!product) return res.status(404).json({ error: 'Товар не найден' })
-    res.json(product)
-  } catch (err) {
-    res.status(500).json({ error: 'Ошибка при получении товара' })
+      where: { id: parseInt(id, 10) },
+    });
+    if (product) {
+      res.json(product);
+    } else {
+      res.status(404).json({ error: 'Продукт не найден' });
+    }
+  } catch (error) {
+    res.status(500).json({ error: 'Ошибка при получении продукта' });
   }
-}
+};
 
-// Добавить продукт
+// Создать новый продукт
 export const createProduct = async (req: Request, res: Response) => {
+  const { name, category, quantity, note, favorite } = req.body;
   try {
-    const { name, category, type, quantity, price, description } = req.body
-    const product = await prisma.product.create({
-      data: { name, category, type, quantity, price, description }
-    })
-    res.status(201).json(product)
-  } catch (err) {
-    res.status(500).json({ error: 'Ошибка при создании товара' })
+    const newProduct = await prisma.product.create({
+      data: {
+        name,
+        category,
+        quantity,
+        note,
+        favorite,
+      },
+    });
+    res.status(201).json(newProduct);
+  } catch (error) {
+    res.status(500).json({ error: 'Ошибка при создании продукта' });
   }
-}
+};
 
 // Обновить продукт
 export const updateProduct = async (req: Request, res: Response) => {
+  const { id } = req.params;
+  const { name, category, quantity, note, favorite } = req.body;
   try {
-    const { name, category, type, quantity, price, description } = req.body
-    const product = await prisma.product.update({
-      where: { id: Number(req.params.id) },
-      data: { name, category, type, quantity, price, description }
-    })
-    res.json(product)
-  } catch (err) {
-    res.status(500).json({ error: 'Ошибка при обновлении товара' })
+    const updatedProduct = await prisma.product.update({
+      where: { id: parseInt(id, 10) },
+      data: {
+        name,
+        category,
+        quantity,
+        note,
+        favorite,
+      },
+    });
+    res.json(updatedProduct);
+  } catch (error) {
+    res.status(500).json({ error: 'Ошибка при обновлении продукта' });
   }
-}
+};
 
 // Удалить продукт
 export const deleteProduct = async (req: Request, res: Response) => {
+  const { id } = req.params;
   try {
     await prisma.product.delete({
-      where: { id: Number(req.params.id) }
-    })
-    res.json({ message: 'Товар удалён' })
-  } catch (err) {
-    res.status(500).json({ error: 'Ошибка при удалении товара' })
+      where: { id: parseInt(id, 10) },
+    });
+    res.status(204).send();
+  } catch (error) {
+    res.status(500).json({ error: 'Ошибка при удалении продукта' });
   }
-}
+};
