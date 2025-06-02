@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const API = 'https://your-backend-url.onrender.com/api/users'
+const API = 'https://axiona.pro/api/users'
 
 export const fetchUsers = async () => {
   const res = await axios.get(API)
