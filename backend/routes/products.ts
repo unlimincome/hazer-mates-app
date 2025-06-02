@@ -1,21 +1,18 @@
-import express from 'express'
-import * as productController from '../controllers/productController'
+import { Router } from 'express';
+import {
+  getAllProducts,
+  getProductById,
+  createProduct,
+  updateProduct,
+  deleteProduct,
+} from '../controllers/productController';
 
-const router = express.Router()
+const router = Router();
 
-// Получить все продукты
-router.get('/', productController.getAllProducts)
+router.get('/', getAllProducts);
+router.get('/:id', getProductById);
+router.post('/', createProduct);
+router.put('/:id', updateProduct);
+router.delete('/:id', deleteProduct);
 
-// Получить продукт по id
-router.get('/:id', productController.getProductById)
-
-// Добавить продукт
-router.post('/', productController.createProduct)
-
-// Обновить продукт
-router.put('/:id', productController.updateProduct)
-
-// Удалить продукт
-router.delete('/:id', productController.deleteProduct)
-
-export default router
+export default router;
