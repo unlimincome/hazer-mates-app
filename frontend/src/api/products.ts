@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const API = 'https://your-backend-url.onrender.com/api/products'
+const API = 'https://axiona.pro/api/products'
 
 export const fetchProducts = async () => {
   const res = await axios.get(API)
