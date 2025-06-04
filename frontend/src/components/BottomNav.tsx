@@ -3,7 +3,7 @@ import { AiOutlineAppstore, AiOutlineBarChart, AiOutlineShoppingCart } from 'rea
 
 const BottomNav = () => {
   return (
-    <nav className="flex justify-around items-center h-14 border-t bg-white">
+    <nav className="flex justify-around items-center h-14 border-t bg-white fixed bottom-0 left-0 w-full z-10">
       <NavLink
         to="/warehouse"
         className={({ isActive }) =>

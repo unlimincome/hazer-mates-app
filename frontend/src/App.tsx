@@ -8,7 +8,7 @@ import BottomNav from './components/BottomNav'
 const App = () => {
   return (
     <div className="min-h-screen flex flex-col bg-background text-black">
-      <div className="flex-grow p-4">
+      <div className="flex-grow p-4 pb-16">
         <Routes>
           <Route path="/" element={<Navigate to="/warehouse" />} />
           <Route path="/warehouse" element={<WarehousePage />} />
