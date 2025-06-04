@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const API = 'https://axiona.pro/api/users'
+const API = `${import.meta.env.VITE_API_BASE_URL}/api/users`
 
 export const fetchUsers = async () => {
   const res = await axios.get(API)
