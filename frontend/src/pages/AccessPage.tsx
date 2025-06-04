@@ -3,8 +3,13 @@ import { fetchUsers, grantAccess, revokeAccess } from '../api/access'
 import UserAccessRow from '../components/UserAccessRow'
 import { useUserStore } from '../store/useUserStore'
 
+interface User {
+  telegramId: number
+  username: string | null
+}
+
 const AccessPage = () => {
-  const [users, setUsers] = useState<any[]>([])
+  const [users, setUsers] = useState<User[]>([])
   const { isAdmin } = useUserStore()
 
   useEffect(() => {
